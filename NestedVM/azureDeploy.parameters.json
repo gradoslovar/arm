@@ -1,0 +1,83 @@
+{
+  "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "baseTemplateUri": {
+      "value": "https://grenier.blob.core.windows.net/resources"
+    },
+    "nestedDeploymentNameVnet": {
+      "value": "deploy-virtual-network"
+    },
+    "sharedTemplateNameVnet": {
+      "value": "virtualNetwork.json"
+    },
+    "vNetName": {
+      "value": "virtual-network-01"
+    },
+    "vNetRange": {
+      "value": "10.0.0.0/16"
+    },
+    "subnetProdRange": {
+      "value": "10.0.1.0/24"
+    },
+    "subnetDevRange": {
+      "value": "10.0.2.0/24"
+    },
+    "storageType": {
+      "value": "Standard_LRS"
+    },
+    "nestedDeploymentNameStorage": {
+      "value": "deploy-storage-account"
+    },
+    "sharedTemplateNameStorage": {
+      "value": "storageAccount.json"
+    },
+    "storageAccountNamePrefix": {
+      "value": "storage"
+    },
+    "nicName": {
+      "value": "vm-nic-0"
+    },
+    "nestedDeploymentNameNic": {
+      "value": "deploy-nic"
+    },
+    "sharedTemplateNameNic": {
+      "value": "networkInterface.json"
+    },
+    "nestedDeploymentNameVM": {
+      "value": "deploy-virtual-machine"
+    },
+    "sharedTemplateNameVM": {
+      "value": "virtualMachine.json"
+    },
+    "vmNamePrefix": {
+      "value": "win"
+    },
+    "vmSize": {
+      "value": "Standard_D1"
+    },
+    "vmAdminUserName": {
+      "value": "nenad"
+    },
+    "vmAdminPassword": {
+      "reference": {
+        "keyVault": {
+          "id": "/subscriptions/07dd3def-975e-4933-8a0b-5baf4fd2b88f/resourceGroups/KeyVault/providers/Microsoft.KeyVault/vaults/BlackLodge"
+        },
+        "secretName": "vmAdminPassword"
+      }
+    },
+    "vmWindowsOSVersion": {
+      "value": "2016-Datacenter"
+    },
+    "sharedTemplateNamePublicIp": {
+      "value": "publicIP.json"
+    },
+    "publicIpNamePrefix": {
+      "value": "ip"
+    },
+    "nestedDeploymentNamePublicIp": {
+      "value": "deploy-public-ip"
+    }
+  }
+}
