@@ -1,0 +1,33 @@
+{
+  "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "dnsNamePrefix": {
+      "value": "devtech"
+    },
+    "agentCount": {
+      "value": 2
+    },
+    "agentVMSize": {
+      "value": "Standard_A2"
+    },
+    "linuxAdminUsername": {
+      "value": "kubeadmin"
+    },
+    "orchestratorType": {
+      "value": "Kubernetes"
+    },
+    "masterCount": {
+      "value": 1
+    },
+    "sshRSAPublicKey": {
+      "value": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCmcAPBj0YBzBL5sWXjlRjBk/0JWogwkx4A4IEPfgK53dz4lfpejd8KHIVegUQEc3oHiAG8lzi4l+JvW0m960sjbXfcZJRkr7GoV3IMAmFjaQ3nXfn5vo9DlWCUMd9viMcdFAIkELFPLzO/YllG/6ZCCOoCrwdvPTfvGHEqmADwHuWY9i/V54yumkDN0cAKnqh/fV3WeEP+IaFed8KKnxTH045/WWud3Iq3A6/T0I0QBGKH5A3xyvmG0r6Pnj93rj9aeMwyjA3o8rsGBhxP6VIZhAoiC74gTMsT9Qdx1eLVDU8kfcUL2iwwANKuqrD63bTYQSQk5iyFwNH5g0vXuq/5"
+    },
+    "servicePrincipalClientId": {
+      "value": "b2643156-fe56-4041-bfae-eb8b82cca521"
+    },
+    "servicePrincipalClientSecret": {
+      "value": "TgL3rR+88PBOw09Jtr7GFIKAQfM89XjubzrrPKxY96s="
+    }
+  }
+}
