@@ -1,0 +1,21 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "webAppName": {
+            "value": "nenad666"
+        },
+        "customHostname": {
+            "value": "test.deuxmoulins.com"
+        },
+        "keyVaultId": {
+            "value": "/subscriptions/07dd3def-975e-4933-8a0b-5baf4fd2b88f/resourceGroups/KeyVault/providers/Microsoft.KeyVault/vaults/ARM"
+        },
+        "keyVaultSecretName": {
+            "value": "testpfx"
+        },
+        "certificateName": {
+            "value": "deuxmoulins"
+        }
+    }
+}

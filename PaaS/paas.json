@@ -1,0 +1,118 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "servicePlanName": {
+            "type": "string",
+            "minLength": 1,
+            "defaultValue": "PaaS-PLAN"
+        },
+        "servicePlanSKU": {
+            "type": "string",
+            "allowedValues": [
+                "Standard"
+            ],
+            "defaultValue": "Standard"
+        },
+        "servicePlanWorkerSize": {
+            "type": "string",
+            "allowedValues": [
+                "1",
+                "2",
+                "3"
+            ],
+            "defaultValue": "1"
+        },
+        "webAppName": {
+            "type": "string",
+            "metadata": {
+                "description": "The name of the WebApp"
+            }
+        },
+        "customHostname": {
+            "type": "string",
+            "metadata": {
+                "description": "The custom hostname for WebApp"
+            }
+        },
+        "keyVaultId": {
+            "type": "string",
+            "metadata": {
+                "description": "Existing Key Vault resource Id with an access policy to allow Microsoft.Web RP to read Key Vault secrets"
+            }
+        },
+        "keyVaultSecretName": {
+            "type": "string",
+            "metadata": {
+                "description": "Key Vault Secret that contains a PFX certificate"
+            }
+        },
+        "certificateName": {
+            "type": "string",
+            "metadata": {
+                "description": "The certificate friendly name"
+            }
+        }
+    },
+    "variables": { },
+    "resources": [
+        {
+            "type": "Microsoft.Web/serverfarms",
+            "name": "[parameters('servicePlanName')]",
+            "apiVersion": "2016-03-01",
+            "location": "[resourceGroup().location]",
+            "sku": {
+                "name" : "S1",
+                "tier": "[parameters('servicePlanSKU')]",
+                "size": "[parameters('servicePlanWorkerSize')]",
+                "family": "S",
+                "capacity": "1"
+            },
+            "properties": {
+                "name": "[parameters('servicePlanName')]"
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites",
+            "name": "[parameters('WebAppName')]",
+            "apiVersion": "2016-03-01",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "name": "[parameters('WebAppName')]",
+                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('servicePlanName'))]"
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/serverfarms', parameters('servicePlanName'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/certificates",
+            "name": "[parameters('certificateName')]",
+            "apiVersion": "2016-03-01",
+            "location": "[resourceGroup().location]",
+            "properties":{
+                "keyVaultId":"[parameters('keyVaultId')]",
+                "keyVaultSecretName":"[parameters('keyVaultSecretName')]",
+                "serverFarmId": "[resourceId('Microsoft.Web/serverFarms',parameters('servicePlanName'))]"
+            },
+            "dependsOn": [
+                "[concat('Microsoft.Web/sites/',parameters('webAppName'))]"
+            ]
+        },
+        {
+            "type":"Microsoft.Web/sites/hostnameBindings",
+            "name":"[concat(parameters('webAppName'), '/', parameters('customHostname'))]",
+            "apiVersion":"2016-03-01",
+            "location":"[resourceGroup().location]",
+            "properties":{
+                "sslState": "SniEnabled",
+                "thumbprint": "[reference(resourceId('Microsoft.Web/certificates', parameters('certificateName'))).Thumbprint]"
+            },
+            "dependsOn": [
+                "[concat('Microsoft.Web/certificates/',parameters('certificateName'))]"
+            ]
+        }
+    ],
+    "outputs": {
+    }
+}
