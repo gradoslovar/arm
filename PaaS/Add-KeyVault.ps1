@@ -1,5 +1,5 @@
-$pfxFilePath = "C:\gradoslovar\arm\PaaS\deuxmoulins.pfx"
-$pfxPassword = "Test123!"
+$pfxFilePath = "..."
+$pfxPassword = "..."
 $keyVaultName = "ARM"
 $keyVaultSecretName = "testpfx"
 
