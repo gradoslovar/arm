@@ -2,12 +2,12 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-      "ServicePlanName": {
+      "servicePlanName": {
         "type": "string",
         "minLength": 1,
-        "defaultValue": "TMServicePlan"
+        "defaultValue": "MCServicePlan"
       },
-      "ServicePlanSkuName": {
+      "servicePlanSkuName": {
         "type": "string",
         "defaultValue": "S1",
         "allowedValues": [
@@ -19,7 +19,7 @@
           "description": "Describes plan's pricing tier and capacity. Check details at https://azure.microsoft.com/en-us/pricing/details/app-service/"
         }
       },
-      "WebAppLocations": {
+      "webAppLocations": {
         "type": "array",
         "defaultValue": [ "West Europe", "Central US" ]
       }
@@ -28,60 +28,52 @@
     },
     "resources": [
       {
-        "name": "[concat(parameters('ServicePlanName'),'-',copyIndex())]",
+        "name": "[concat(parameters('servicePlanName'),'-',copyIndex())]",
         "type": "Microsoft.Web/serverfarms",
-        "location": "[parameters('WebAppLocations')[copyIndex()]]",
+        "location": "[parameters('webAppLocations')[copyIndex()]]",
         "apiVersion": "2015-08-01",
         "copy": {
-          "count": "[length(parameters('WebAppLocations'))]",
-          "name": "ServicePlanCopy"
+          "count": "[length(parameters('webAppLocations'))]",
+          "name": "servicePlanCopy"
         },
         "sku": {
-          "name": "[parameters('ServicePlanSkuName')]"
-        },
-        "dependsOn": [ ],
-        "tags": {
-          "displayName": "[concat(parameters('ServicePlanName'),'-',copyIndex())]"
+          "name": "[parameters('servicePlanSkuName')]"
         },
         "properties": {
-          "name": "[concat(parameters('ServicePlanName'),'-',copyIndex())]",
+          "name": "[concat(parameters('servicePlanName'),'-',copyIndex())]",
           "numberOfWorkers": 1
         }
       },
       {
         "name": "[concat(parameters('ServicePlanName'),'-site-',copyIndex())]",
         "type": "Microsoft.Web/sites",
-        "location": "[parameters('WebAppLocations')[copyIndex()]]",
+        "location": "[parameters('webAppLocations')[copyIndex()]]",
         "apiVersion": "2015-08-01",
         "copy": {
-          "count": "[length(parameters('WebAppLocations'))]",
-          "name": "SiteCopy"
+          "count": "[length(parameters('webAppLocations'))]",
+          "name": "siteCopy"
         },
         "dependsOn": [
-          "[resourceId('Microsoft.Web/serverfarms', concat(parameters('ServicePlanName'),'-',copyIndex()))]"
+          "[resourceId('Microsoft.Web/serverfarms', concat(parameters('servicePlanName'),'-',copyIndex()))]"
         ],
-        "tags": {
-          "[concat('hidden-related:', resourceId('Microsoft.Web/serverfarms', concat(parameters('ServicePlanName'),'-',copyIndex())))]": "Resource",
-          "displayName": "[concat(parameters('ServicePlanName'),'-site-',copyIndex())]"
-        },
         "properties": {
           "name": "[concat(parameters('ServicePlanName'),'-site-',copyIndex())]",
-          "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', concat(parameters('ServicePlanName'),'-',copyIndex()))]"
+          "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', concat(parameters('servicePlanName'),'-',copyIndex()))]"
         }
       },
       {
-        "name": "[concat(parameters('ServicePlanName'),'-TM')]",
+        "name": "[concat(parameters('servicePlanName'),'-TM')]",
         "type": "Microsoft.Network/trafficManagerProfiles",
         "apiVersion": "2017-05-01",
         "location": "global",
         "dependsOn": [
-          "SiteCopy"
+          "siteCopy"
         ],
         "properties": {
           "profileStatus": "Enabled",
           "trafficRoutingMethod": "Performance",
           "dnsConfig": {
-            "relativeName": "[concat(parameters('ServicePlanName'),'-TM')]",
+            "relativeName": "[concat(parameters('servicePlanName'),'-TM')]",
             "ttl": 300
           },
           "monitorConfig": {
@@ -91,18 +83,18 @@
           },
           "endpoints": [
             {
-              "name": "[concat(parameters('ServicePlanName'),'-site-','0')]",
+              "name": "[concat(parameters('servicePlanName'),'-site-','0')]",
               "type": "Microsoft.Network/trafficManagerProfiles/azureEndpoints",
               "properties": {
-                "targetResourceId": "[resourceId('Microsoft.Web/sites/',concat(parameters('ServicePlanName'),'-site-','0'))]",
+                "targetResourceId": "[resourceId('Microsoft.Web/sites/',concat(parameters('servicePlanName'),'-site-','0'))]",
                 "endpointStatus": "Enabled"
               }
             },
             {
-              "name": "[concat(parameters('ServicePlanName'),'-site-','1')]",
+              "name": "[concat(parameters('servicePlanName'),'-site-','1')]",
               "type": "Microsoft.Network/trafficManagerProfiles/azureEndpoints",
               "properties": {
-                "targetResourceId": "[resourceId('Microsoft.Web/sites/',concat(parameters('ServicePlanName'),'-site-','1'))]",
+                "targetResourceId": "[resourceId('Microsoft.Web/sites/',concat(parameters('servicePlanName'),'-site-','1'))]",
                 "endpointStatus": "Enabled"
               }
             }
