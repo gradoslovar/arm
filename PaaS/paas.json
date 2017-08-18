@@ -2,67 +2,115 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "ServicePlanName": {
+        "servicePlanName": {
             "type": "string",
             "minLength": 1,
             "defaultValue": "PaaS-PLAN"
         },
-        "ServicePlanSKU": {
+        "servicePlanSKU": {
             "type": "string",
             "allowedValues": [
-                "Free",
-                "Shared",
-                "Basic",
                 "Standard"
             ],
-            "defaultValue": "Free"
+            "defaultValue": "Standard"
         },
-        "ServicePlanWorkerSize": {
+        "servicePlanWorkerSize": {
             "type": "string",
             "allowedValues": [
-                "0",
                 "1",
-                "2"
+                "2",
+                "3"
             ],
-            "defaultValue": "0"
+            "defaultValue": "1"
+        },
+        "webAppName": {
+            "type": "string",
+            "metadata": {
+                "description": "The name of the WebApp"
+            }
+        },
+        "customHostname": {
+            "type": "string",
+            "metadata": {
+                "description": "The custom hostname for WebApp"
+            }
+        },
+        "keyVaultId": {
+            "type": "string",
+            "metadata": {
+                "description": "Existing Key Vault resource Id with an access policy to allow Microsoft.Web RP to read Key Vault secrets"
+            }
+        },
+        "keyVaultSecretName": {
+            "type": "string",
+            "metadata": {
+                "description": "Key Vault Secret that contains a PFX certificate"
+            }
+        },
+        "certificateName": {
+            "type": "string",
+            "metadata": {
+                "description": "The certificate friendly name"
+            }
         }
     },
-    "variables": {
-        "WebAppName": "[concat('PaaS', uniqueString(resourceGroup().id))]"
-    },
+    "variables": { },
     "resources": [
         {
-            "name": "[parameters('ServicePlanName')]",
             "type": "Microsoft.Web/serverfarms",
+            "name": "[parameters('servicePlanName')]",
+            "apiVersion": "2016-03-01",
             "location": "[resourceGroup().location]",
-            "apiVersion": "2014-06-01",
-            "dependsOn": [ ],
-            "tags": {
-              "displayName": "[parameters('ServicePlanName')]"
-          },
+            "sku": {
+                "name" : "S1",
+                "tier": "[parameters('servicePlanSKU')]",
+                "size": "[parameters('servicePlanWorkerSize')]",
+                "family": "S",
+                "capacity": "1"
+            },
             "properties": {
-                "name": "[parameters('ServicePlanName')]",
-                "sku": "[parameters('ServicePlanSKU')]",
-                "workerSize": "[parameters('ServicePlanWorkerSize')]",
-                "numberOfWorkers": 1
+                "name": "[parameters('servicePlanName')]"
             }
         },
         {
-            "name": "[variables('WebAppName')]",
             "type": "Microsoft.Web/sites",
+            "name": "[parameters('WebAppName')]",
+            "apiVersion": "2016-03-01",
             "location": "[resourceGroup().location]",
-            "apiVersion": "2015-08-01",
-            "dependsOn": [
-                "[resourceId('Microsoft.Web/serverfarms', parameters('ServicePlanName'))]"
-            ],
-            "tags": {
-                "[concat('hidden-related:', resourceId('Microsoft.Web/serverfarms', parameters('ServicePlanName')))]": "Resource",
-                "displayName": "[variables('WebAppName')]"
-            },
             "properties": {
-                "name": "[variables('WebAppName')]",
-                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('ServicePlanName'))]"
-            }
+                "name": "[parameters('WebAppName')]",
+                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('servicePlanName'))]"
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/serverfarms', parameters('servicePlanName'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/certificates",
+            "name": "[parameters('certificateName')]",
+            "apiVersion": "2016-03-01",
+            "location": "[resourceGroup().location]",
+            "properties":{
+                "keyVaultId":"[parameters('keyVaultId')]",
+                "keyVaultSecretName":"[parameters('keyVaultSecretName')]",
+                "serverFarmId": "[resourceId('Microsoft.Web/serverFarms',parameters('servicePlanName'))]"
+            },
+            "dependsOn": [
+                "[concat('Microsoft.Web/sites/',parameters('webAppName'))]"
+            ]
+        },
+        {
+            "type":"Microsoft.Web/sites/hostnameBindings",
+            "name":"[concat(parameters('webAppName'), '/', parameters('customHostname'))]",
+            "apiVersion":"2016-03-01",
+            "location":"[resourceGroup().location]",
+            "properties":{
+                "sslState": "SniEnabled",
+                "thumbprint": "[reference(resourceId('Microsoft.Web/certificates', parameters('certificateName'))).Thumbprint]"
+            },
+            "dependsOn": [
+                "[concat('Microsoft.Web/certificates/',parameters('certificateName'))]"
+            ]
         }
     ],
     "outputs": {
