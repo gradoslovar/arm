@@ -31,7 +31,7 @@
         "name": "[concat(parameters('servicePlanName'),'-',copyIndex())]",
         "type": "Microsoft.Web/serverfarms",
         "location": "[parameters('webAppLocations')[copyIndex()]]",
-        "apiVersion": "2015-08-01",
+        "apiVersion": "2016-09-01",
         "copy": {
           "count": "[length(parameters('webAppLocations'))]",
           "name": "servicePlanCopy"
@@ -48,7 +48,7 @@
         "name": "[concat(parameters('ServicePlanName'),'-site-',copyIndex())]",
         "type": "Microsoft.Web/sites",
         "location": "[parameters('webAppLocations')[copyIndex()]]",
-        "apiVersion": "2015-08-01",
+        "apiVersion": "2016-08-01",
         "copy": {
           "count": "[length(parameters('webAppLocations'))]",
           "name": "siteCopy"

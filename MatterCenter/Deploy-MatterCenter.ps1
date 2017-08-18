@@ -27,6 +27,7 @@ New-AzureRmResourceGroupDeployment `
 
 
 #  display the end result
+
 $x = Get-AzureRmTrafficManagerProfile -ResourceGroupName $rgName
 $x
 $x.Endpoints
