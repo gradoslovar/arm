@@ -1,7 +1,7 @@
 # parameters 
-$rgName = "MatterCenter"
+$rgName = "SettingsAndSlots"
 $rgLocation = "West Europe"
-$DeploymentName = "MatterCenterDeployment"
+$DeploymentName = "SettingsAndSlots"
 
 # import the AzureRM modules
 #Import-Module AzureRM.TrafficManager
