@@ -1,0 +1,129 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "servicePlanName": {
+        "type": "string",
+        "minLength": 1,
+        "defaultValue": "MCServicePlan"
+      },
+      "servicePlanSkuName": {
+        "type": "string",
+        "defaultValue": "S1",
+        "allowedValues": [
+          "S1",
+          "S2",
+          "S3"
+        ],
+        "metadata": {
+          "description": "Describes plan's pricing tier and capacity. Check details at https://azure.microsoft.com/en-us/pricing/details/app-service/"
+        }
+      },
+      "webAppLocations": {
+        "type": "string",
+        "defaultValue": "West Europe"
+      },
+      "webAppName": {
+        "type": "string",
+        "defaultValue": "mctestdeploy"
+      },
+      "slotName": {
+        "type": "string",
+        "defaultValue": "Slot"
+      }
+    },
+    "variables": {
+    },
+    "resources": [
+      {
+        "name": "[parameters('servicePlanName')]",
+        "type": "Microsoft.Web/serverfarms",
+        "location": "[parameters('webAppLocations')]",
+        "apiVersion": "2016-09-01",
+        "sku": {
+          "name": "[parameters('servicePlanSkuName')]"
+        },
+        "properties": {
+          "name": "[parameters('servicePlanName')]",
+          "numberOfWorkers": 1
+        }
+      },
+      {
+        "name": "[parameters('webAppName')]",
+        "type": "Microsoft.Web/sites",
+        "location": "[parameters('webAppLocations')]",
+        "apiVersion": "2016-08-01",
+        "dependsOn": [
+          "[resourceId('Microsoft.Web/serverfarms',parameters('servicePlanName'))]"
+        ],
+        "properties": {
+          "name": "[parameters('webAppName')]",
+          "serverFarmId": "[resourceId('Microsoft.Web/serverfarms',parameters('servicePlanName'))]"
+        },
+        "resources": [
+          {
+            "name": "appsettings",
+            "type": "config",
+            "apiVersion": "2016-08-01",
+            "dependsOn": [
+              "[concat('Microsoft.Web/sites/', parameters('webAppName'))]"
+            ],
+            "properties": {
+              "key1": "value1",
+              "key2": "value2"
+            },
+            "metadata": {
+              "description": "Setting up the app settings within nested resources block"
+            }
+          },
+          {
+            "name": "slotConfigNames",
+            "type": "config",
+            "apiVersion": "2016-08-01",
+            "dependsOn": [
+              "[concat('Microsoft.Web/sites/', parameters('webAppName'))]"
+            ],
+            "properties": {
+              "appSettingNames": [
+                "key1"
+              ]
+            },
+            "metadata": {
+              "description": "Setting up the sticky app settings"
+            }
+          },
+          {
+            "apiVersion": "2016-08-01",
+            "name": "[parameters('slotName')]",
+            "type": "slots",
+            "location": "[parameters('webAppLocations')]",
+            "dependsOn": [
+              "[resourceId('Microsoft.Web/Sites', parameters('webAppName'))]"
+            ],
+            "properties": { },
+            "metadata": {
+              "description": "Setting up the web app slot within nested resources block"
+            },
+            "resources": [
+              {
+                "name": "appsettings",
+                "type": "config",
+                "apiVersion": "2016-08-01",
+                "dependsOn": [
+                  "[concat('Microsoft.Web/sites/', parameters('webAppName'), '/slots/', parameters('slotName'))]"
+                ],
+                "properties": {
+                  "slotkey1": "slotvalue1",
+                  "slotkey2": "slotvalue2"
+                },
+                "metadata": {
+                  "description": "Setting up the app settings for the web app slot within the double nested resources block"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "outputs": {}
+  }
