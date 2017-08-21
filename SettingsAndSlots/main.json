@@ -5,7 +5,7 @@
       "servicePlanName": {
         "type": "string",
         "minLength": 1,
-        "defaultValue": "MCServicePlan"
+        "defaultValue": "SandS"
       },
       "servicePlanSkuName": {
         "type": "string",
@@ -25,7 +25,7 @@
       },
       "webAppName": {
         "type": "string",
-        "defaultValue": "mctestdeploy"
+        "defaultValue": "SandSTest"
       },
       "slotName": {
         "type": "string",
@@ -58,9 +58,18 @@
         ],
         "properties": {
           "name": "[parameters('webAppName')]",
-          "serverFarmId": "[resourceId('Microsoft.Web/serverfarms',parameters('servicePlanName'))]"
+          "serverFarmId": "[resourceId('Microsoft.Web/serverfarms',parameters('servicePlanName'))]",
+          "siteConfig": {
+            "connectionStrings": [ /*Setting up SQL connection string*/
+              {
+                "name": "ConnString1",
+                "connectionString": "Server=myServerAddress;Database=myDataBase;Trusted_Connection=True;",
+                "type": "SQLServer"
+              }
+            ]
+          }
         },
-        "resources": [
+        "resources": [ /*Create nested resources block in order to define app settings, slots and stickiness*/
           {
             "name": "appsettings",
             "type": "config",
@@ -104,7 +113,7 @@
             "metadata": {
               "description": "Setting up the web app slot within nested resources block"
             },
-            "resources": [
+            "resources": [ /*Nested down more additional resources block in order to define settings for the slot*/
               {
                 "name": "appsettings",
                 "type": "config",
