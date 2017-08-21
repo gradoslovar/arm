@@ -27,6 +27,12 @@
         "type": "string",
         "defaultValue": "SandSTest"
       },
+      "webAppConnectionString": {
+        "type": "string",
+        "metadata": {
+          "description": "... Connection String for Web App"
+        }
+      },
       "slotName": {
         "type": "string",
         "defaultValue": "Slot"
@@ -63,7 +69,7 @@
             "connectionStrings": [ /*Setting up SQL connection string*/
               {
                 "name": "ConnString1",
-                "connectionString": "Server=myServerAddress;Database=myDataBase;Trusted_Connection=True;",
+                "connectionString": "[parameters('webAppConnectionString')]",
                 "type": "SQLServer"
               }
             ]
