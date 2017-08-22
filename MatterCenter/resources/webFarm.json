@@ -1,0 +1,26 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {},
+    "variables": {},
+    "resources": [
+        {
+            "name": "[concat(parameters('servicePlanName'),'-',copyIndex())]",
+            "type": "Microsoft.Web/serverfarms",
+            "location": "[parameters('webAppLocations')[copyIndex()]]",
+            "apiVersion": "2016-09-01",
+            "copy": {
+              "count": "[length(parameters('webAppLocations'))]",
+              "name": "servicePlanCopy"
+            },
+            "sku": {
+              "name": "[parameters('servicePlanSkuName')]"
+            },
+            "properties": {
+              "name": "[concat(parameters('servicePlanName'),'-',copyIndex())]",
+              "numberOfWorkers": 1
+            }
+        }
+    ],
+    "outputs": {}
+}

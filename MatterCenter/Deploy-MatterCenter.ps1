@@ -20,8 +20,8 @@ New-AzureRmResourceGroup -Location $rgLocation `
 New-AzureRmResourceGroupDeployment `
 	-Name $DeploymentName `
 	-ResourceGroupName $rgName `
-    -TemplateFile "$scriptDir\mc.json" `
-    -TemplateParameterFile "$scriptDir\mc.parameters.json" `
+    -TemplateFile "$scriptDir\main.json" `
+    -TemplateParameterFile "$scriptDir\main.parameters.json" `
     -Verbose -Force
     #@additionalParameters
 
