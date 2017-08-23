@@ -17,9 +17,6 @@
           "templateLink": {
             "uri": "https://raw.githubusercontent.com/gradoslovar/arm/develop/MatterCenter/resources/serverfarm.json",
             "contentVersion": "1.0.0.0"
-          },
-          "parameters": {
-            "environmentConfiguration": {"value": "[parameters('environmentConfiguration')]"}
           }
         }
       }
