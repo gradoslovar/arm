@@ -21,7 +21,7 @@
     },
     "resources": [
         {
-            "name": "[parameters('servicePlanName')]",
+            "name": "webFarm",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "[variables('deploymentApiVersion')]",
             "properties": {
@@ -33,7 +33,6 @@
             },
             "parameters": {
                 "servicePLanName": {"value": "[parameters('servicePlanName')]"},
-                "appLocation": {"value": "[parameters('appLocation')]"},
                 "servicePlanSkuName": {"value": "[parameters('servicePLanSkuName')]"}                
             }
         }

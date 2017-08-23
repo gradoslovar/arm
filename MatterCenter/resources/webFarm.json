@@ -19,7 +19,7 @@
         {
             "name": "[parameters('servicePlanName')]",
             "type": "Microsoft.Web/serverfarms",
-            "location": "[parameters('appLocation')]",
+            "location": "[resourceGroup().location]",
             "apiVersion": "[variables('webFarmApiVersion')]",
             "sku": {
               "name": "[parameters('servicePlanSkuName')]",
