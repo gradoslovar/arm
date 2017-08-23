@@ -27,7 +27,7 @@
             "properties": {
                 "mode":"Incremental",
                 "templateLink": {
-                    "uri": "https://github.com/gradoslovar/arm/blob/develop/MatterCenter/resources/webFarm.json",
+                    "uri": "https://raw.githubusercontent.com/gradoslovar/arm/develop/MatterCenter/resources/webFarm.json",
                     "contentVersion": "1.0.0.0"
                 }
             },

@@ -15,11 +15,6 @@
         "name": "[variables('hostingPlanName')]",
         "type": "Microsoft.Web/serverfarms",
         "location": "[resourceGroup().location]",
-        "tags": {
-          "app": "[parameters('environmentConfiguration').tags.app]",
-          "bu": "[parameters('environmentConfiguration').tags.bu]",
-          "env": "[parameters('environmentConfiguration').tags.env]"
-        },
         "sku": {
           "name": "B1",
           "tier": "Basic",
