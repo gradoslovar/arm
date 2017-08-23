@@ -19,7 +19,8 @@
             "location": "[parameters('appLocation')]",
             "apiVersion": "[variables('webAppApiVersion')]",
             "properties": {
-              "name": "[parameters('webAppName')]"
+              "name": "[parameters('webAppName')]",
+              "serverFarmId": "[resourceId('Microsoft.Web/serverFarms','webFarm')]"
             }
         }
     ],
