@@ -5,16 +5,6 @@
         "servicePlanName": {
             "type": "string"
         },
-        "appLocation": {
-            "type": "string"
-        },
-        "servicePLanSkuName": {
-            "type": "string",
-            "allowedValues": [
-                "S1",
-                "S2"
-            ]
-        }
     },
     "variables": {
         "deploymentApiVersion": "2017-05-10"
@@ -32,8 +22,7 @@
                 }
             },
             "parameters": {
-                "servicePLanName": {"value": "[parameters('servicePlanName')]"},
-                "servicePlanSkuName": {"value": "[parameters('servicePLanSkuName')]"}                
+                "servicePLanName": {"value": "[parameters('servicePlanName')]"}              
             }
         }
         
