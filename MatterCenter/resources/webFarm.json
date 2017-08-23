@@ -28,5 +28,10 @@
             }
         }
     ],
-    "outputs": { }
+    "outputs": {
+        "webFarmName": {
+            "type": "string",
+            "value": "[parameters('servicePlanConfig').name]"
+        }
+    }
 }
