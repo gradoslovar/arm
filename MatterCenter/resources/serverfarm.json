@@ -7,7 +7,7 @@
       }
     },
     "variables": {
-      "hostingPlanName": "[concat(parameters('environmentConfiguration').prefix,'-farm-olandese-',parameters('environmentConfiguration').tags.env)]"
+      "hostingPlanName": "[concat(parameters('environmentConfiguration').prefix,'-farm-',parameters('environmentConfiguration').tags.env)]"
     },
     "resources": [
       {

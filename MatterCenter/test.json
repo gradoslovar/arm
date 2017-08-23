@@ -2,13 +2,7 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-      "_artifactsLocation": {
-        "type": "string"
-      },
-      "_artifactsLocationSasToken": {
-        "type": "securestring"
-      },
-      "environmentConfiguration": {
+        "environmentConfiguration": {
         "type": "object"
       }
     },
@@ -21,7 +15,7 @@
         "properties": {
           "mode": "Incremental",
           "templateLink": {
-            "uri": "[concat(parameters('_artifactsLocation'),'/Microsoft.Web/ServerFarm-Olandese.json',parameters('_artifactsLocationSasToken'))]",
+            "uri": "https://github.com/gradoslovar/arm/blob/develop/MatterCenter/resources/serverfarm.json",
             "contentVersion": "1.0.0.0"
           },
           "parameters": {
