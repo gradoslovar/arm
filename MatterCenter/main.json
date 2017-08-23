@@ -7,6 +7,9 @@
         },
         "appLocation": {
             "type": "string"
+        },
+        "webAppName": {
+            "type": "string"
         }
     },
     "variables": {
@@ -28,7 +31,25 @@
                     "appLocation": {"value": "[parameters('appLocation')]"}                
                 }
             }
-        }   
+        },
+        {
+            "name": "webApp",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "[variables('deploymentApiVersion')]",
+            "dependsOn": [
+                "[concat('Microsoft.Resources/deployments/', 'webFarm')]"
+            ],
+            "properties": {
+                "mode":"Incremental",
+                "templateLink": {
+                    "uri": "https://raw.githubusercontent.com/gradoslovar/arm/develop/MatterCenter/resources/webApp.json",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "webAppName": {"value": "[parameters('webAppName')]"}
+                }
+            }
+        }  
     ],
     "outputs": {}
 }

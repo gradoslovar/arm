@@ -1,0 +1,27 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "appLocation": {
+            "type": "string"
+        },
+        "webAppName": {
+            "type": "string"
+        }
+    },
+    "variables": {
+        "webAppApiVersion": "2016-09-01"
+    },
+    "resources": [
+        {
+            "name": "[parameters('webAppName')]",
+            "type": "Microsoft.Web/sites",
+            "location": "[parameters('appLocation')]",
+            "apiVersion": "[variables('webAppApiVersion')]",
+            "properties": {
+              "name": "[parameters('webAppName')]"
+            }
+        }
+    ],
+    "outputs": { }
+}
