@@ -5,10 +5,7 @@
         "servicePLanConfig": {
             "value": {
                 "name": "MC365ServicePlan",
-                "skuname": {
-                    "s1": "S1",
-                    "s2": "S2"
-                }
+                "skuname": "S1"
             }
         },
         "appLocation": {
