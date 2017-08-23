@@ -4,15 +4,12 @@
     "parameters": {
         "servicePLanConfig": {
             "value": {
-                "name": "MC365ServicePlan",
+                "prefix": "mc365",
                 "skuname": "S1"
             }
         },
         "appLocation": {
             "value": "West Europe"
-        },
-        "webAppName": {
-            "value": "mc365webapp"
         }
     }
 }

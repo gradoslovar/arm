@@ -10,11 +10,12 @@
         }
     },
     "variables": {
-        "webFarmApiVersion": "2016-09-01"
+        "webFarmApiVersion": "2016-09-01",
+        "webFarmName": "[concat(parameters('servicePlanConfig').prefix,'ServicePLan')]"
     },
     "resources": [
         {
-            "name": "[parameters('servicePlanConfig').name]",
+            "name": "[variables('webFarmName')]",
             "type": "Microsoft.Web/serverfarms",
             "location": "[parameters('appLocation')]",
             "apiVersion": "[variables('webFarmApiVersion')]",
@@ -24,14 +25,14 @@
               "capacity": 1
             },
             "properties": {
-              "name": "[parameters('servicePlanConfig').name]"
+              "name": "[variables('webFarmName')]"
             }
         }
     ],
     "outputs": {
         "webFarmName": {
             "type": "string",
-            "value": "[parameters('servicePlanConfig').name]"
+            "value": "[variables('webFarmName')]"
         }
     }
 }

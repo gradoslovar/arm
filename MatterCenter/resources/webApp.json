@@ -2,25 +2,26 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "appLocation": {
-            "type": "string"
+        "servicePlanConfig": {
+            "type": "object"
         },
-        "webAppName": {
+        "appLocation": {
             "type": "string"
         }
     },
     "variables": {
-        "webAppApiVersion": "2016-08-01"
+        "webAppApiVersion": "2016-08-01",
+        "webAppName": "[concat(parameters('servicePlanConfig').prefix,'webapp')]"
     },
     "resources": [
         {
-            "name": "[parameters('webAppName')]",
+            "name": "[variables('webAppName')]",
             "type": "Microsoft.Web/sites",
             "location": "[parameters('appLocation')]",
             "apiVersion": "[variables('webAppApiVersion')]",
             "properties": {
-              "name": "[parameters('webAppName')]",
-              "serverFarmId": "[resourceId('Microsoft.Web/serverFarms',reference('webFarm').outputs.exampleProperty.value)]"
+              "name": "[variables('webAppName')]",
+              "serverFarmId": "[resourceId('Microsoft.Web/serverFarms',reference('linkedTemplate').outputs.exampleProperty.value)]"
             }
         }
     ],
