@@ -1,0 +1,36 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "_artifactsLocation": {
+        "type": "string"
+      },
+      "_artifactsLocationSasToken": {
+        "type": "securestring"
+      },
+      "environmentConfiguration": {
+        "type": "object"
+      }
+    },
+    "variables": {},
+    "resources": [
+      {
+        "apiVersion": "2015-01-01",
+        "name": "AppPlan",
+        "type": "Microsoft.Resources/deployments",
+        "properties": {
+          "mode": "Incremental",
+          "templateLink": {
+            "uri": "[concat(parameters('_artifactsLocation'),'/Microsoft.Web/ServerFarm-Olandese.json',parameters('_artifactsLocationSasToken'))]",
+            "contentVersion": "1.0.0.0"
+          },
+          "parameters": {
+            "environmentConfiguration": {
+              "value": "[parameters('environmentConfiguration')]"
+            }
+          }
+        }
+      }
+    ],
+    "outputs": {}
+  }
