@@ -1,7 +1,21 @@
 {
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
-    "parameters": {},
+    "parameters": {
+        "servicePlanName": {
+            "type": "string"
+        },
+        "appLocation": {
+            "type": "string"
+        },
+        "servicePLanSkuName": {
+            "type": "string",
+            "allowedValues": [
+                "S1",
+                "S2"
+            ]
+        }
+    },
     "variables": {
         "deploymentApiVersion": "2017-05-10"
     },
@@ -11,10 +25,16 @@
             "type": "Microsoft.Resources/deployment",
             "apiVersion": "[variables('deploymentApiVersion')]",
             "properties": {
-                "mode":"Incremental"
+                "mode":"Incremental",
+                "templateLink": {
+                    "uri": "https://github.com/gradoslovar/arm/blob/develop/MatterCenter/resources/webFarm.json",
+                    "contentVersion": "1.0.0.0"
+                }
             },
             "parameters": {
-                
+                "servicePLanName": {"value": "[parameters('servicePlanName')]"},
+                "appLocation": {"value": "[parameters('appLocation')]"},
+                "servicePlanSkuName": {"value": "[parameters('servicePLanSkuName')]"}                
             }
         }
         

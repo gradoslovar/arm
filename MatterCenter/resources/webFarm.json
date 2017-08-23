@@ -1,26 +1,35 @@
 {
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
-    "parameters": {},
-    "variables": {},
+    "parameters": {
+        "servicePlanName": {
+            "type": "string"
+        },
+        "appLocation": {
+            "type": "string"
+        },
+        "servicePlanSkuName": {
+            "type": "string"
+        }
+    },
+    "variables": {
+        "webFarmApiVersion": "2016-09-01"
+    },
     "resources": [
         {
-            "name": "[concat(parameters('servicePlanName'),'-',copyIndex())]",
+            "name": "[parameters('servicePlanName')]",
             "type": "Microsoft.Web/serverfarms",
-            "location": "[parameters('webAppLocations')[copyIndex()]]",
-            "apiVersion": "2016-09-01",
-            "copy": {
-              "count": "[length(parameters('webAppLocations'))]",
-              "name": "servicePlanCopy"
-            },
+            "location": "[parameters('appLocation')]",
+            "apiVersion": "[variables('webFarmApiVersion')]",
             "sku": {
-              "name": "[parameters('servicePlanSkuName')]"
+              "name": "[parameters('servicePlanSkuName')]",
+              "tier": "Standard",
+              "capacity": 1
             },
             "properties": {
-              "name": "[concat(parameters('servicePlanName'),'-',copyIndex())]",
-              "numberOfWorkers": 1
+              "name": "[parameters('servicePlanName')]"
             }
         }
     ],
-    "outputs": {}
+    "outputs": { }
 }
