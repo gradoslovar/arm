@@ -20,7 +20,7 @@
             "apiVersion": "[variables('webAppApiVersion')]",
             "properties": {
               "name": "[parameters('webAppName')]",
-              "serverFarmId": "[resourceId('Microsoft.Web/serverFarms','webFarm')]"
+              "serverFarmId": "[resourceId('Microsoft.Web/serverFarms','MC365ServicePlan')]"
             }
         }
     ],
