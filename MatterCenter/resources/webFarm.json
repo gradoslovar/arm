@@ -19,10 +19,10 @@
         {
             "name": "[parameters('servicePlanName')]",
             "type": "Microsoft.Web/serverfarms",
-            "location": "[resourceGroup().location]",
+            "location": "[parameters('appLocation')]",
             "apiVersion": "[variables('webFarmApiVersion')]",
             "sku": {
-              "name": "S1",
+              "name": "[parameters('servicePlanSkuName')]",
               "tier": "Standard",
               "capacity": 1
             },

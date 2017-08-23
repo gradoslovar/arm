@@ -5,6 +5,16 @@
         "servicePlanName": {
             "type": "string"
         },
+        "appLocation": {
+            "type": "string"
+        },
+        "servicePLanSkuName": {
+            "type": "string",
+            "allowedValues": [
+                "S1",
+                "S2"
+            ]
+        }
     },
     "variables": {
         "deploymentApiVersion": "2017-05-10"
@@ -19,13 +29,14 @@
                 "templateLink": {
                     "uri": "https://raw.githubusercontent.com/gradoslovar/arm/develop/MatterCenter/resources/webFarm.json",
                     "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "servicePLanName": {"value": "[parameters('servicePlanName')]"},
+                    "appLocation": {"value": "[parameters('appLocation')]"},
+                    "servicePlanSkuName": {"value": "[parameters('servicePLanSkuName')]"}                
                 }
-            },
-            "parameters": {
-                "servicePLanName": {"value": "[parameters('servicePlanName')]"}              
             }
-        }
-        
+        }   
     ],
     "outputs": {}
 }

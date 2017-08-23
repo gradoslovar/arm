@@ -19,9 +19,7 @@
             "contentVersion": "1.0.0.0"
           },
           "parameters": {
-            "environmentConfiguration": {
-              "value": "[parameters('environmentConfiguration')]"
-            }
+            "environmentConfiguration": {"value": "[parameters('environmentConfiguration')]"}
           }
         }
       }
