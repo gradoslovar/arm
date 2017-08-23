@@ -22,7 +22,7 @@
     "resources": [
         {
             "name": "mcWebFarm",
-            "type": "Microsoft.Resources/deployment",
+            "type": "Microsoft.Resources/deployments",
             "apiVersion": "[variables('deploymentApiVersion')]",
             "properties": {
                 "mode":"Incremental",
