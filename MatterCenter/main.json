@@ -2,18 +2,11 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "servicePlanName": {
-            "type": "string"
+        "servicePlanConfig": {
+            "type": "object"
         },
         "appLocation": {
             "type": "string"
-        },
-        "servicePLanSkuName": {
-            "type": "string",
-            "allowedValues": [
-                "S1",
-                "S2"
-            ]
         }
     },
     "variables": {
@@ -31,9 +24,8 @@
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
-                    "servicePLanName": {"value": "[parameters('servicePlanName')]"},
-                    "appLocation": {"value": "[parameters('appLocation')]"},
-                    "servicePlanSkuName": {"value": "[parameters('servicePLanSkuName')]"}                
+                    "servicePLanConfig": {"value": "[parameters('servicePlanConfig')]"},
+                    "appLocation": {"value": "[parameters('appLocation')]"}                
                 }
             }
         }   

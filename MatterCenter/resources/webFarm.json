@@ -2,13 +2,10 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "servicePlanName": {
-            "type": "string"
+        "servicePlanConfig": {
+            "type": "object"
         },
         "appLocation": {
-            "type": "string"
-        },
-        "servicePlanSkuName": {
             "type": "string"
         }
     },
@@ -17,17 +14,17 @@
     },
     "resources": [
         {
-            "name": "[parameters('servicePlanName')]",
+            "name": "[parameters('servicePlanConfig').name]",
             "type": "Microsoft.Web/serverfarms",
             "location": "[parameters('appLocation')]",
             "apiVersion": "[variables('webFarmApiVersion')]",
             "sku": {
-              "name": "[parameters('servicePlanSkuName')]",
+              "name": "[parameters('servicePlanConfig').name]",
               "tier": "Standard",
               "capacity": 1
             },
             "properties": {
-              "name": "[parameters('servicePlanName')]"
+              "name": "[parameters('servicePlanConfig').name]"
             }
         }
     ],
