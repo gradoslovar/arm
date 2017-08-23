@@ -19,7 +19,7 @@
             "location": "[parameters('appLocation')]",
             "apiVersion": "[variables('webFarmApiVersion')]",
             "sku": {
-              "name": "[parameters('servicePlanConfig').name]",
+              "name": "[parameters('servicePlanConfig').skuname.s1]",
               "tier": "Standard",
               "capacity": 1
             },

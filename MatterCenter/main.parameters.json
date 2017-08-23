@@ -5,7 +5,7 @@
         "servicePLanConfig": {
             "value": {
                 "name": "MC365ServicePlan",
-                "skuName": {
+                "skuname": {
                     "s1": "S1",
                     "s2": "S2"
                 }
