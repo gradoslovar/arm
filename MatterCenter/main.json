@@ -46,7 +46,8 @@
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
-                    "webAppName": {"value": "[parameters('webAppName')]"}
+                    "webAppName": {"value": "[parameters('webAppName')]"},
+                    "appLocation": {"value": "[parameters('appLocation')]"}
                 }
             }
         }  

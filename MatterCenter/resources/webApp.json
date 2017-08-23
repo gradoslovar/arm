@@ -10,7 +10,7 @@
         }
     },
     "variables": {
-        "webAppApiVersion": "2016-09-01"
+        "webAppApiVersion": "2016-08-01"
     },
     "resources": [
         {
