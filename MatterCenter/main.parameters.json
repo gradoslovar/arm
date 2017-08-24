@@ -8,11 +8,14 @@
                 "skuname": "S1"
             }
         },
+        "nestedDeploymentName": {
+            "value": {
+                "webfarm": "webFarmDeploy",
+                "webapp": "webAppDeploy"
+            }
+        },
         "appLocation": {
             "value": "West Europe"
-        },
-        "nestedDeploymentFarmName": {
-            "value": "webFarmDeploy"
         }
     }
 }

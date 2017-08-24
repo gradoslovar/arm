@@ -5,10 +5,10 @@
         "servicePlanConfig": {
             "type": "object"
         },
-        "appLocation": {
-            "type": "string"
+        "nestedDeploymentName": {
+            "type": "object"
         },
-        "nestedDeploymentFarmName": {
+        "appLocation": {
             "type": "string"
         }
     },
@@ -17,7 +17,7 @@
     },
     "resources": [
         {
-            "name": "[parameters('nestedDeploymentFarmName')]",
+            "name": "[parameters('nestedDeploymentName').webfarm]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "[variables('deploymentApiVersion')]",
             "properties": {
@@ -33,11 +33,11 @@
             }
         },
         {
-            "name": "webApp",
+            "name": "[parameters('nestedDeploymentName').webapp]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "[variables('deploymentApiVersion')]",
             "dependsOn": [
-                "[concat('Microsoft.Resources/deployments/', parameters('nestedDeploymentFarmName'))]"
+                "[concat('Microsoft.Resources/deployments/', parameters('nestedDeploymentName').webfarm)]"
             ],
             "properties": {
                 "mode":"Incremental",
