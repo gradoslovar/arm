@@ -7,6 +7,9 @@
         },
         "appLocation": {
             "type": "string"
+        },
+        "nestedDeploymentFarmName": {
+            "type": "string"
         }
     },
     "variables": {
@@ -14,7 +17,7 @@
     },
     "resources": [
         {
-            "name": "webFarm",
+            "name": "[parameters('nestedDeploymentFarmName')]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "[variables('deploymentApiVersion')]",
             "properties": {
@@ -34,7 +37,7 @@
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "[variables('deploymentApiVersion')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Web/serverfarms','mc365ServicePLan')]"
+                "[concat('Microsoft.Resources/deployments/', parameters('nestedDeploymentFarmName'))]"
             ],
             "properties": {
                 "mode":"Incremental",
