@@ -21,7 +21,7 @@
             "apiVersion": "[variables('webAppApiVersion')]",
             "properties": {
               "name": "[variables('webAppName')]",
-              "serverFarmId": "[resourceId('Microsoft.Web/serverFarms',reference('linkedTemplate').outputs.exampleProperty.value)]"
+              "serverFarmId": "[resourceId('Microsoft.Web/serverFarms',reference('webFarm').outputs.webFarmName.value)]"
             }
         }
     ],
