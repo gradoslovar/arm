@@ -21,7 +21,7 @@
             "apiVersion": "[variables('webAppApiVersion')]",
             "properties": {
               "name": "[variables('webAppName')]",
-              "serverFarm": "[reference('webFarm').outputs.webFarmName.value]"
+              "serverFarm": "mc365ServicePLan"
             }
         }
     ],
