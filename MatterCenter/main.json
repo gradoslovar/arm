@@ -34,7 +34,7 @@
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "[variables('deploymentApiVersion')]",
             "dependsOn": [
-                "[concat('Microsoft.Resources/deployments/', 'webFarm')]"
+                "[resourceId('Microsoft.Web/serverfarms','mc365ServicePLan')]"
             ],
             "properties": {
                 "mode":"Incremental",
