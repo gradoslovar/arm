@@ -3,7 +3,8 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "artifactsLocation": {
-      "type": "string"
+      "type": "string",
+      "defaultValue": "https://raw.githubusercontent.com/gradoslovar/arm/develop/test/resources"
     },
     "environmentConfiguration": {
       "type": "object"
@@ -19,7 +20,7 @@
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-          "uri": "[concat(parameters('_artifactsLocation'),'/Microsoft.Insights/ApplicationInsights-Olandese.json',parameters('_artifactsLocationSasToken'))]",
+          "uri": "[concat(parameters('artifactsLocation'),'/ApplicationInsights-Olandese.json')]",
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
@@ -36,7 +37,7 @@
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-          "uri": "[concat(parameters('_artifactsLocation'),'/Microsoft.Web/ServerFarm-Olandese.json',parameters('_artifactsLocationSasToken'))]",
+          "uri": "[concat(parameters('artifactsLocation'),'/ServerFarm-Olandese.json')]",
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
@@ -54,7 +55,7 @@
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-          "uri": "[concat(parameters('_artifactsLocation'),'/Microsoft.Web/WebApp-Olandese-Service-Api.json',parameters('_artifactsLocationSasToken'))]",
+          "uri": "[concat(parameters('artifactsLocation'),'/WebApp-Olandese-Service-Api.json')]",
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
@@ -69,7 +70,7 @@
                 "instrumentationKey": "[reference('ApplicationInsights-Olandese').outputs.applicationInsightsInstrumentationKey.value]"
               },
               "storageAccounts": [
-                { // 0 - Storage
+                {
                   "resourceGroup": "[resourceGroup().name]",
                   "name": "[reference('StorageAccount-Olandese').outputs.storageAccountName.value]",
                   "connectionString": "[reference('StorageAccount-Olandese').outputs.storageAccountConnectionString.value]"
