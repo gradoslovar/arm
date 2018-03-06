@@ -54,7 +54,7 @@
       "value": "win"
     },
     "vmSize": {
-      "value": "Standard_D1"
+      "value": "Standard_D1_v2"
     },
     "vmAdminUserName": {
       "value": "nenad"
